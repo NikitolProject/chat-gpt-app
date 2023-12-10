@@ -1,6 +1,7 @@
 import webpack from "webpack";
 
-const mode = process.env.BUILD_MODE ?? "standalone";
+// const mode = process.env.BUILD_MODE ?? "standalone";
+const mode = process.env.BUILD_MODE ?? "export";
 console.log("[Next] build mode", mode);
 
 const disableChunk = !!process.env.DISABLE_CHUNK || mode === "export";
@@ -27,12 +28,18 @@ const nextConfig = {
     return config;
   },
   output: mode,
+  distDir: "/dist",
   images: {
     unoptimized: mode === "export",
   },
   experimental: {
     forceSwcTransforms: true,
   },
+  env: {
+    BASE_URL: "https://api.naga.ac",
+    OPENAI_API_KEY: "JoHqRNCi7tKSQPI3hPgaPRv8SQ26NRLrfb_QaT2eVKk",
+    // DISABLE_GPT4: true
+  }
 };
 
 const CorsHeaders = [
